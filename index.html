@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de RCP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🚑 Controle de Parada Cardíaca</h1>
+
+<div class="painel">
+  <button id="btnRCP" onclick="iniciarRCP()">▶ Iniciar RCP</button>
+  <button id="btnStop" onclick="pararRCP()" style="display:none;">⏹ Parar RCP</button>
+  <h2 id="tempo">00:00</h2>
+  <p id="ciclo">Ciclo: 0</p>
+</div>
+
+<div class="acoes">
+  <h3>💉 Registrar Medicação</h3>
+  <input type="text" id="medNome" placeholder="Medicamento">
+  <input type="text" id="medDose" placeholder="Dose">
+  <input type="text" id="medUser" placeholder="Usuário">
+  <button onclick="registrarMedicacao()">Registrar</button>
+
+  <h3>⚡ Desfibrilador</h3>
+  <input type="number" id="joules" placeholder="Joules">
+  <button onclick="registrarChoque()">Aplicar Choque</button>
+</div>
+
+<h3>📋 Linha do Tempo</h3>
+<ul id="log"></ul>
+
+<script src="script.js"></script>
+</body>
+</html>
