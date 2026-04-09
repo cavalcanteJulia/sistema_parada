@@ -1,86 +1,141 @@
-let inicio;
-let intervalo;
 let segundos = 0;
+let intervalo = null;
 let ciclo = 0;
 
-function formatarTempo(s) {
-  let min = Math.floor(s / 60);
+let logs = [];
+let choques = 0;
+let medicacoes = 0;
+
+function salvar() {
+  localStorage.setItem("rcp_logs", JSON.stringify(logs));
+}
+
+function carregar() {
+  let dados = localStorage.getItem("rcp_logs");
+  if (dados) {
+    logs = JSON.parse(dados);
+    logs.forEach(l => addTela(l));
+  }
+}
+
+carregar();
+
+function formatar(s) {
+  let m = Math.floor(s / 60);
   let sec = s % 60;
-  return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+  return `${m.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+}
+
+function hora() {
+  return new Date().toLocaleTimeString();
+}
+
+function addLog(txt) {
+  let msg = `[${hora()}] ${txt}`;
+  logs.push(msg);
+  salvar();
+  addTela(msg);
+}
+
+function addTela(msg) {
+  let li = document.createElement("li");
+  li.innerText = msg;
+  document.getElementById("log").appendChild(li);
+}
+
+function iniciarParada() {
+  segundos = 0;
+  ciclo = 0;
+  choques = 0;
+  medicacoes = 0;
+
+  document.getElementById("tempo").innerText = "00:00";
+  document.getElementById("ciclo").innerText = "Ciclo: 0";
+
+  document.getElementById("log").innerHTML = "";
+  logs = [];
+
+  addLog("🚨 Início da parada cardíaca");
+
+  alert("Parada iniciada! Comece a RCP");
 }
 
 function iniciarRCP() {
   if (intervalo) return;
 
-  inicio = new Date();
-  adicionarLog("🟢 Início da RCP");
-
-  document.getElementById("btnRCP").style.display = "none";
-  document.getElementById("btnStop").style.display = "inline-block";
+  addLog("▶ Início da RCP");
 
   intervalo = setInterval(() => {
     segundos++;
-    document.getElementById("tempo").innerText = formatarTempo(segundos);
+    document.getElementById("tempo").innerText = formatar(segundos);
 
-    // ciclo a cada 2 min (120s)
     if (segundos % 120 === 0) {
       ciclo++;
       document.getElementById("ciclo").innerText = "Ciclo: " + ciclo;
 
-      alert("⚠ Trocar compressor / checar ritmo!");
-      adicionarLog("🔁 Novo ciclo de RCP");
+      alert("🔁 Trocar compressor / checar ritmo");
+      addLog("🔁 Novo ciclo");
     }
   }, 1000);
 }
 
 function pararRCP() {
-  if (!intervalo) return;
-
   clearInterval(intervalo);
   intervalo = null;
-  adicionarLog("🔴 RCP parada");
-
-  document.getElementById("btnRCP").style.display = "inline-block";
-  document.getElementById("btnStop").style.display = "none";
-}
-
-function horaAtual() {
-  let agora = new Date();
-  return agora.toLocaleTimeString();
-}
-
-function adicionarLog(texto) {
-  let li = document.createElement("li");
-  li.innerText = `[${horaAtual()}] ${texto}`;
-  document.getElementById("log").appendChild(li);
+  addLog("⏹ RCP parada");
 }
 
 function registrarMedicacao() {
-  let nome = document.getElementById("medNome").value;
-  let dose = document.getElementById("medDose").value;
-  let user = document.getElementById("medUser").value;
+  let nome = medNome.value;
+  let dose = medDose.value;
+  let user = medUser.value;
 
-  if (!nome || !dose || !user) {
-    alert("Preencha tudo!");
-    return;
-  }
+  if (!nome || !dose || !user) return alert("Preencha tudo");
 
-  adicionarLog(`💉 Medicação: ${nome} | Dose: ${dose} | Por: ${user}`);
+  medicacoes++;
+  addLog(`💉 ${nome} ${dose} - ${user}`);
 
-  document.getElementById("medNome").value = "";
-  document.getElementById("medDose").value = "";
-  document.getElementById("medUser").value = "";
+  setTimeout(() => {
+    alert(`⏰ Hora de repetir ${nome}`);
+    addLog(`⏰ Repetir ${nome}`);
+  }, 180000); // 3 min
+
+  medNome.value = "";
+  medDose.value = "";
+  medUser.value = "";
 }
 
 function registrarChoque() {
-  let joules = document.getElementById("joules").value;
+  let j = joules.value;
+  if (!j) return alert("Informe joules");
 
-  if (!joules) {
-    alert("Informe os joules!");
+  choques++;
+  addLog(`⚡ Choque ${j}J`);
+
+  joules.value = "";
+}
+
+function registrarROSC() {
+  if (!intervalo) {
+    alert("RCP não está ativa!");
     return;
   }
 
-  adicionarLog(`⚡ Choque aplicado: ${joules}J`);
+  addLog("💓 Retorno da circulação (ROSC)");
 
-  document.getElementById("joules").value = "";
+  pararRCP();
+
+  alert("Paciente voltou! Gerando relatório...");
+  gerarRelatorio();
+}
+
+function gerarRelatorio() {
+  let rel = `
+Tempo total: ${formatar(segundos)}
+Ciclos: ${ciclo}
+Choques: ${choques}
+Medicações: ${medicacoes}
+`;
+
+  alert(rel);
 }

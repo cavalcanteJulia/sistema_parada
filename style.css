@@ -1,116 +1,111 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  color: #ffffff;
-  text-align: center;
   margin: 0;
-  padding: 20px;
-  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0f172a, #020617);
+  color: white;
+  padding: 15px;
 }
 
 h1 {
-  color: #ff6b6b;
-  font-size: 2.5em;
-  margin-bottom: 30px;
-  text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 15px;
+  color: #ff4d4d;
 }
 
-.painel {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 30px;
-  margin: 20px auto;
-  border-radius: 15px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+/* CARD */
+.painel, .acoes {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 15px;
+  margin-bottom: 15px;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  max-width: 400px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
 }
 
-button {
-  padding: 15px 30px;
-  margin: 10px;
-  cursor: pointer;
+/* GRID DE BOTÕES */
+.botoes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* BOTÕES */
+.btn {
+  padding: 15px;
+  font-size: 1.1em;
+  border-radius: 12px;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(45deg, #ff6b6b, #ffa500);
-  color: white;
-  font-size: 1.2em;
   font-weight: bold;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  transition: 0.2s;
 }
 
-button:hover {
-  background: linear-gradient(45deg, #ff5252, #ff8c00);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 82, 82, 0.4);
+.btn:active {
+  transform: scale(0.95);
 }
 
-button:active {
-  transform: translateY(0);
+/* CORES */
+.red { background: #ef4444; }
+.green { background: #22c55e; }
+.gray { background: #64748b; }
+.blue { background: #3b82f6; }
+
+/* TEMPO */
+#tempo {
+  font-size: 3em;
+  text-align: center;
+  margin: 15px 0;
+  font-weight: bold;
 }
 
+/* CICLO */
+#ciclo {
+  text-align: center;
+  color: #facc15;
+}
+
+/* INPUTS */
 input {
+  width: 100%;
   padding: 12px;
-  margin: 8px;
+  margin: 5px 0;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: #1e293b;
   color: white;
-  font-size: 1em;
-}
-
-input::placeholder {
-  color: #cccccc;
 }
 
 input:focus {
-  outline: none;
-  background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 0 0 2px #ff6b6b;
+  outline: 2px solid #3b82f6;
 }
 
-.acoes {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  margin: 20px auto;
-  border-radius: 15px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  max-width: 600px;
-}
-
-.acoes h3 {
-  color: #ff6b6b;
-  margin-bottom: 15px;
-}
-
+/* LISTA */
 ul {
-  text-align: left;
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 0;
   list-style: none;
+  padding: 0;
 }
 
 li {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  margin: 10px 0;
-  border-left: 5px solid #ff6b6b;
+  background: rgba(255,255,255,0.05);
+  padding: 10px;
+  margin: 5px 0;
+  border-left: 4px solid #ef4444;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-size: 0.9em;
 }
 
-#tempo {
-  font-size: 3em;
-  font-weight: bold;
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-#ciclo {
+/* BOTÃO RELATÓRIO */
+.relatorio {
+  width: 100%;
+  padding: 15px;
+  background: #22c55e;
+  border: none;
+  border-radius: 12px;
   font-size: 1.2em;
-  color: #ffa500;
+  font-weight: bold;
+  margin-top: 10px;
 }

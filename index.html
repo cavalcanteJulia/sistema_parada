@@ -2,34 +2,41 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Controle de RCP</title>
+  <title>RCP PRO</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🚑 Controle de Parada Cardíaca</h1>
+<h1>🚑 RCP PRO</h1>
 
 <div class="painel">
-  <button id="btnRCP" onclick="iniciarRCP()">▶ Iniciar RCP</button>
-  <button id="btnStop" onclick="pararRCP()" style="display:none;">⏹ Parar RCP</button>
+  <div class="botoes-grid">
+    <button class="btn red" onclick="iniciarParada()">🚨 Parada</button>
+    <button class="btn green" onclick="iniciarRCP()">▶ RCP</button>
+    <button class="btn gray" onclick="pararRCP()">⏹ Parar</button>
+    <button class="btn blue" onclick="registrarROSC()">💓 ROSC</button>
+  </div>
+
   <h2 id="tempo">00:00</h2>
   <p id="ciclo">Ciclo: 0</p>
 </div>
 
 <div class="acoes">
-  <h3>💉 Registrar Medicação</h3>
-  <input type="text" id="medNome" placeholder="Medicamento">
-  <input type="text" id="medDose" placeholder="Dose">
-  <input type="text" id="medUser" placeholder="Usuário">
+  <h3>💉 Medicação</h3>
+  <input id="medNome" placeholder="Medicamento">
+  <input id="medDose" placeholder="Dose">
+  <input id="medUser" placeholder="Usuário">
   <button onclick="registrarMedicacao()">Registrar</button>
 
-  <h3>⚡ Desfibrilador</h3>
-  <input type="number" id="joules" placeholder="Joules">
-  <button onclick="registrarChoque()">Aplicar Choque</button>
+  <h3>⚡ Choque</h3>
+  <input id="joules" type="number" placeholder="Joules">
+  <button onclick="registrarChoque()">Aplicar</button>
 </div>
 
-<h3>📋 Linha do Tempo</h3>
+<h3>📋 Timeline</h3>
 <ul id="log"></ul>
+
+<button class="relatorio" onclick="gerarRelatorio()">📊 Gerar Relatório</button>
 
 <script src="script.js"></script>
 </body>
